@@ -88,6 +88,9 @@
 </template>
 
 <script>
+
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -101,11 +104,25 @@ export default {
       dismissCountDown: 0,
     };
   },
+  computed: {
+    ...mapState(['token'])
+  },
   created() {
     this.listarNotas();
   },
   methods: {
+    alerta(){
+      this.mensaje.color = 'danger';
+      this.mensaje.texto = 'Probando alerta';
+      this.showAlert();
+    },
     listarNotas() {
+      const config = {
+        headers: {
+          token: this.token
+        }
+      }
+
       this.axios
         .get("nota")
         .then((response) => {
@@ -118,6 +135,12 @@ export default {
     },
 
     agregarNota() {
+      let config = {
+        headers: {
+          token: this.token
+        }
+      }
+      
       //console.log(this.nota);
       this.axios
         .post("/nueva-nota", this.nota)
