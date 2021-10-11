@@ -124,7 +124,7 @@ export default {
       }
 
       this.axios
-        .get("nota")
+        .get("/nota", config)
         .then((response) => {
           // console.log(response.data)
           this.notas = response.data;
@@ -135,7 +135,7 @@ export default {
     },
 
     agregarNota() {
-      let config = {
+      const config = {
         headers: {
           token: this.token
         }
@@ -143,7 +143,7 @@ export default {
       
       //console.log(this.nota);
       this.axios
-        .post("/nueva-nota", this.nota)
+        .post("/nueva-nota", this.nota, config)
         .then((res) => {
           this.notas.push(res.data);
           this.nota.nombre = "";
@@ -154,8 +154,8 @@ export default {
         })
         .catch((e) => {
           console.log(e.response);
-          if (e.response.data.error.errors.nombre.message) {
-            this.mensaje.texto = e.response.data.error.errors.nombre.message;
+          if (e.response) {
+            this.mensaje.texto = e.response;
           } else {
             this.mensaje.texto = "Error de sistema!";
           }

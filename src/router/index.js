@@ -1,36 +1,53 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 import Home from '../views/Home.vue'
 
-Vue.use(VueRouter)
+  import store from "../store/index"
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/notas',
-    name: 'notas',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Notas.vue')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  }
-]
+Vue.use(Router)
 
-const router = new VueRouter({
+
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: () => import('../views/About.vue')
+    },
+    {
+      path: '/notas',
+      name: 'notas',
+      component: () => import('../views/Notas.vue'),
+      meta: {requiereAuth: true}
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login.vue')
+    }
+  ]
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+
+  const rutaProtegida = to.matched.some(record => record.meta.requireAuth)
+
+  if(rutaProtegida && store.state.token === ''){
+
+    next({name: 'login'});
+
+  }else{
+    next();
+  }
+
+
+});
+
+export default router;
