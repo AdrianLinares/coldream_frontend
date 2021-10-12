@@ -26,9 +26,22 @@
         class="form-control my-2"
         v-model="nota.descripcion"
       />
-      <b-button class="btn-lg btn-block btn-success my-2" type="submit"
-        >Agregar</b-button
-      >
+      <div class="d-grid my-4">
+      <button
+          class="btn btn-primary btn-lg"
+          type="submit" 
+          >
+          Agregar
+        </button>
+        <br>
+      <button
+          class="btn btn-secondary btn-lg"
+          type="submit" @click="$router.push('/Menu')" 
+          >
+          Volver
+        </button>
+      </div>
+      
     </form>
 
     <form @submit.prevent="editarNota(notaEditar)" v-else>
@@ -166,6 +179,12 @@ export default {
     },
 
     eliminarNota(id) {
+      const config = {
+        headers: {
+          token: this.token
+        }
+      }
+
       this.axios
         .delete(`nota/${id}`)
         .then((res) => {
@@ -182,6 +201,12 @@ export default {
     },
 
     activarEdicion(id){
+      const config = {
+        headers: {
+          token: this.token
+        }
+      }
+
     this.agregar = false;
     this.axios.get(`nota/${id}`)
       .then(res => {
@@ -193,6 +218,12 @@ export default {
   },
 
   editarNota(item){
+    const config = {
+        headers: {
+          token: this.token
+        }
+      }
+      
     this.axios.put(`nota/${item._id}`, item)
       .then(res => {
         let index = this.notas.findIndex( itemNota => itemNota._id === this.notaEditar._id);

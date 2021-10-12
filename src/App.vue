@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login"  v-if="!estaActivo">Login</router-link> |
-      <a @click="cerrarSesion()"  v-if="estaActivo">Cerrar Sesion</a> |
-      <router-link to="/notas" v-if="estaActivo">Notas</router-link>
+    <div id="nav">     
+      <router-link to="/login"  v-if="!estaActivo"></router-link> 
+      <a @click="cerrarSesion()"  v-if="estaActivo"></a> 
+      
     </div>
     <router-view/>
   </div>
@@ -45,6 +43,6 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #6e93d8;
 }
 </style>
