@@ -38,9 +38,9 @@ const router = new Router({
       component: () => import('../views/Menu.vue')
     },
     {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/Register.vue')
+      path: '/registro',
+      name: 'registro',
+      component: () => import('../views/Registro.vue')
     }
   ]
 });

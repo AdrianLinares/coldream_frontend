@@ -20,7 +20,7 @@ export default new Vuex.Store({
         state.usuarioDB = '';
       }else{
         state.usuarioDB = decode(payload);
-        router.push({name: 'Home'}) //cambiar ruta a Menu
+        router.push({name: 'Home'}) 
       }
     }
   },

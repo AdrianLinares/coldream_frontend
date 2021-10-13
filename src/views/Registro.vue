@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Notas</h1>
+    <h1>Registro de Docentes</h1>
 
     <b-alert
       :show="dismissCountDown"
@@ -12,39 +12,60 @@
       {{ mensaje.texto }}
     </b-alert>
 
-    <form @submit.prevent="agregarNota()" v-if="agregar">
-      <h3 class="text-center">Agregar nueva Nota</h3>
+    <form @submit.prevent="agregarRegistro()" v-if="agregar">
+      <h3 class="text-center">Agregar nuevo registro</h3>
       <input
         type="text"
-        placeholder="Ingrese un Nombre"
+        placeholder="Nombres"
         class="form-control my-2"
-        v-model="nota.nombre"
+        v-model="nota.nombres"
       />
       <input
         type="text"
-        placeholder="Ingrese una descripcion"
+        placeholder="Apellidos"
         class="form-control my-2"
-        v-model="nota.descripcion"
+        v-model="nota.apellidos"
+      />
+      <input
+        type="text"
+        placeholder="Telefono"
+        class="form-control my-2"
+        v-model="nota.telefono"
+      />
+      <input
+        type="text"
+        placeholder="Correo"
+        class="form-control my-2"
+        v-model="nota.correo"
+      />
+      <input
+        type="text"
+        placeholder="Ciudad"
+        class="form-control my-2"
+        v-model="nota.ciudad"
+      />
+      <input
+        type="text"
+        placeholder="País"
+        class="form-control my-2"
+        v-model="nota.pais"
       />
       <div class="d-grid my-4">
-      <button
-          class="btn btn-primary btn-lg"
-          type="submit" 
-          >
+        <button class="btn btn-primary btn-lg" type="submit">
           Agregar
         </button>
-        <br>
-      <button
+        <br />
+        <button
           class="btn btn-secondary btn-lg"
-          type="submit" @click="$router.push('/Menu')" 
-          >
+          type="submit"
+          @click="$router.push('/Menu')"
+        >
           Volver
         </button>
       </div>
-      
     </form>
 
-    <form @submit.prevent="editarNota(notaEditar)" v-else>
+    <form @submit.prevent="editarRegistro(notaEditar)" v-else>
       <h3 class="text-center">Editar Nota</h3>
       <input
         type="text"
@@ -70,18 +91,24 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Descripción</th>
-          <th scope="col">Fecha</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Ciudad</th>
+          <th scope="col">País</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in notas" :key="index">
           <th scope="row">{{ item._id }}</th>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.descripcion }}</td>
-          <td>{{ item.date }}</td>
+          <td>{{ item.nombres }}</td>
+          <td>{{ item.apellidos }}</td>
+          <td>{{ item.telefono }}</td>
+          <td>{{ item.correo }}</td>
+          <td>{{ item.ciudad }}</td>
+          <td>{{ item.pais }}</td>
           <td>
             <b-button
               class="btn-warning btn-sm mx-2"
@@ -90,7 +117,7 @@
             >
             <b-button
               class="btn-danger btn-sm mx-2"
-              @click="eliminarNota(item._id)"
+              @click="eliminarRegistro(item._id)"
               >Eliminar</b-button
             >
           </td>
@@ -101,7 +128,6 @@
 </template>
 
 <script>
-
 import { mapState } from "vuex";
 
 export default {
@@ -112,29 +138,41 @@ export default {
       agregar: true,
       notaEditar: {},
 
+      registro: [],
+      registro: {
+        nombres: "",
+        apellidos: "",
+        telefono: "",
+        correo: "",
+        ciudad: "",
+        pais: "",
+      },
+      agregar: true,
+      registroEditar: {},
+
       mensaje: { color: "success", texto: "" },
       dismissSecs: 5,
       dismissCountDown: 0,
     };
   },
   computed: {
-    ...mapState(['token'])
+    ...mapState(["token"]),
   },
   created() {
-    this.listarNotas();
+    this.listarRegistros();
   },
   methods: {
-    alerta(){
-      this.mensaje.color = 'danger';
-      this.mensaje.texto = 'Probando alerta';
+    alerta() {
+      this.mensaje.color = "danger";
+      this.mensaje.texto = "Probando alerta";
       this.showAlert();
     },
-    listarNotas() {
+    listarRegistros() {
       const config = {
         headers: {
-          token: this.token
-        }
-      }
+          token: this.token,
+        },
+      };
 
       this.axios
         .get("/nota", config)
@@ -147,20 +185,20 @@ export default {
         });
     },
 
-    agregarNota() {
+    agregarRegistro() {
       const config = {
         headers: {
-          token: this.token
-        }
-      }
-      
+          token: this.token,
+        },
+      };
+
       //console.log(this.nota);
       this.axios
-        .post("/nueva-nota", this.nota, config)
+        .post("/nuevo-registro", this.registro, config)
         .then((res) => {
-          this.notas.push(res.data);
-          this.nota.nombre = "";
-          this.nota.descripcion = "";
+          this.registros.push(res.data);
+          this.registros.nombre = "";
+          this.registro.descripcion = "";
           this.mensaje.color = "success";
           this.mensaje.texto = "Nota Agregada!";
           this.showAlert();
@@ -178,18 +216,18 @@ export default {
         });
     },
 
-    eliminarNota(id) {
+    eliminarRegistro(id) {
       const config = {
         headers: {
-          token: this.token
-        }
-      }
+          token: this.token,
+        },
+      };
 
       this.axios
         .delete(`nota/${id}`)
         .then((res) => {
           let index = this.notas.findIndex((item) => item._id === res.data._id);
-          this.notas.splice(index, 1);
+          this.registros.splice(index, 1);
 
           this.showAlert();
           this.mensaje.texto = "Notas Eliminada!";
@@ -200,46 +238,50 @@ export default {
         });
     },
 
-    activarEdicion(id){
+    activarEdicion(id) {
       const config = {
         headers: {
-          token: this.token
-        }
-      }
+          token: this.token,
+        },
+      };
 
-    this.agregar = false;
-    this.axios.get(`nota/${id}`)
-      .then(res => {
-        this.notaEditar = res.data;
-      })
-      .catch(e => {
-        console.log(e.response);
-      })
-  },
+      this.agregar = false;
+      this.axios
+        .get(`nota/${id}`)
+        .then((res) => {
+          this.registroEditar = res.data;
+        })
+        .catch((e) => {
+          console.log(e.response);
+        });
+    },
 
-  editarNota(item){
-    const config = {
+    editarNota(item) {
+      const config = {
         headers: {
-          token: this.token
-        }
-      }
-      
-    this.axios.put(`nota/${item._id}`, item)
-      .then(res => {
-        let index = this.notas.findIndex( itemNota => itemNota._id === this.notaEditar._id);
-        this.notas[index].nombre = this.notaEditar.nombre;
-        this.notas[index].descripcion = this.notaEditar.descripcion;
-        this.notaEditar = {}
+          token: this.token,
+        },
+      };
 
-        this.showAlert();
-        this.mensaje.texto = 'Nota Actualizada'
-        this.mensaje.color = 'success'
-      })
-      .catch(e => {
-        console.log(e);
-      })
-    this.agregar = true;
-  },
+      this.axios
+        .put(`nota/${item._id}`, item)
+        .then((res) => {
+          let index = this.notas.findIndex(
+            (itemNota) => itemNota._id === this.registroEditar._id
+          );
+          this.registro[index].nombre = this.notaEditar.nombre;
+          this.registros[index].descripcion = this.notaEditar.descripcion;
+          this.registroEditar = {};
+
+          this.showAlert();
+          this.mensaje.texto = "Rgistro Actualizado";
+          this.mensaje.color = "success";
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.agregar = true;
+    },
 
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
