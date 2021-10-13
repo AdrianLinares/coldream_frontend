@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h1>Registro de Docentes</h1>
+  <div class="container row mx-auto  gap-3 col-4 justify-content-center align-content-center ">
+    <h1 class="mb-3 ">Registro de Docentes</h1>
 
     <b-alert
       :show="dismissCountDown"
@@ -13,7 +13,7 @@
     </b-alert>
 
     <form @submit.prevent="agregarRegistro()" v-if="agregar">
-      <h3 class="text-center">Agregar nuevo registro</h3>
+      <h3 class="text-center mb-3">Agregar nuevo registro</h3>
       <input
         type="text"
         placeholder="Nombres"
@@ -50,13 +50,13 @@
         class="form-control my-2"
         v-model="nota.pais"
       />
-      <div class="d-grid my-4">
-        <button class="btn btn-primary btn-lg" type="submit">
+      <div class="d-grid my-4 ">
+        <button class="btn btn-success btn-md" type="submit">
           Agregar
         </button>
         <br />
         <button
-          class="btn btn-secondary btn-lg"
+          class="btn btn-warning btn-md"
           type="submit"
           @click="$router.push('/Menu')"
         >

@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h1>Notas</h1>
+  <div class="container  row mx-auto  col-5  justify-content-center align-content-center ">
+    <h1 class="mb-3">Notas</h1>
 
     <b-alert
       :show="dismissCountDown"
@@ -13,7 +13,7 @@
     </b-alert>
 
     <form @submit.prevent="agregarNota()" v-if="agregar">
-      <h3 class="text-center">Agregar nueva Nota</h3>
+      <h3 class="text-center mb-3">Agregar nueva Nota</h3>
       <input
         type="text"
         placeholder="Ingrese un Nombre"
@@ -27,15 +27,16 @@
         v-model="nota.descripcion"
       />
       <div class="d-grid my-4">
-      <button
-          class="btn btn-primary btn-lg"
+        
+        <button
+          class="btn btn-success btn-md"
           type="submit" 
           >
           Agregar
-        </button>
+        </Button>
         <br>
-      <button
-          class="btn btn-secondary btn-lg"
+        <button
+          class="btn btn-dark btn-md"
           type="submit" @click="$router.push('/Menu')" 
           >
           Volver
@@ -103,6 +104,7 @@
 <script>
 
 import { mapState } from "vuex";
+
 
 export default {
   data() {
@@ -251,4 +253,4 @@ export default {
 };
 </script>
 
-<style></style>
+

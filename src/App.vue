@@ -11,6 +11,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   methods:{
     ...mapActions(['cerrarSesion', 'leerToken'])
@@ -22,15 +23,29 @@ export default {
     this.leerToken();
   }
 }
+
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  -webkit-box-flex: initial;
+  font-family: 'Patrick Hand', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #9ce44f;
+  display: -webkit-box ;
+  background-color:aliceblue ;
+  /* width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%; */
+  
+  
+  
 }
 
 #nav {
@@ -45,4 +60,5 @@ export default {
 #nav a.router-link-exact-active {
   color: #6e93d8;
 }
+
 </style>

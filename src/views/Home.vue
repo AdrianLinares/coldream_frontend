@@ -1,12 +1,21 @@
 <template>
-  <div class="container">
-    <img alt="logoap" src="../assets/logoap.png">
-    <h1>Gestor Administrativo Para Plataformas Web "ColDream"</h1>
-    <br>
-    <div class="d-grid gap-2">
-  <button class="btn btn-primary btn-lg" type="button" @click="$router.push('/login')">Inicio</button>
-  
-</div>
+  <div class="container mx-auto mt-0">
+    
+    <div class="d-grid gap-0 col-5  mx-auto justify-content-center align-content-center ">
+      <img alt="logoap" src="../assets/logoap.png">
+      <h2 class="text-center ">Gestor Administrativo Para Plataformas Web "ColDream"</h2>
+      <br>
+      <button 
+        class="btn btn-lg btn-md btn-dark  mb-5 " 
+        type="button"
+         
+        @click="$router.push('/login')"
+
+      >Inicio</button>
+      
+
+    </div>
+    
   </div>
 </template>
 
@@ -20,4 +29,9 @@ export default {
     
   }
 }
+
+
 </script>
+
+
+
