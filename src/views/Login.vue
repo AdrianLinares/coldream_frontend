@@ -26,7 +26,7 @@
         <br>
         <button
           class="btn btn-info btn-lg"
-          type="submit" @click="$router.push('/')"
+          type="submit" 
           >
           Registrarse
         </button>

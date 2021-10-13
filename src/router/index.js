@@ -14,7 +14,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: () => import('../views/Home.vue')
     },
     {
       path: '/about',
@@ -36,6 +36,11 @@ const router = new Router({
       path: '/menu',
       name: 'menu',
       component: () => import('../views/Menu.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Register.vue')
     }
   ]
 });
@@ -46,7 +51,7 @@ router.beforeEach((to, from, next) => {
 
   if(rutaProtegida && store.state.token === ''){
 
-    next({name: 'login'});
+    next({name: 'menu'});
 
   }else{
     next();

@@ -20,7 +20,7 @@ export default new Vuex.Store({
         state.usuarioDB = '';
       }else{
         state.usuarioDB = decode(payload);
-        router.push({name: 'menu'}) //cambiar ruta a Menu
+        router.push({name: 'Home'}) //cambiar ruta a Menu
       }
     }
   },
@@ -29,6 +29,7 @@ export default new Vuex.Store({
     guardarUsuario({commit}, payload){
       localStorage.setItem('token', payload);
       commit('obtenerUsuario', payload)
+      router.push({name: 'menu'});
     },
     cerrarSesion({commit}){
       commit('obtenerUsuario', '');
