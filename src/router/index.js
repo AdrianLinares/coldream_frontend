@@ -41,6 +41,16 @@ const router = new Router({
       path: '/registro',
       name: 'registro',
       component: () => import('../views/Registro.vue')
+    },
+    {
+      path: '/area',
+      name: 'area',
+      component: () => import('../views/Area.vue')
+    },
+    {
+      path: '/hora',
+      name: 'hora',
+      component: () => import('../views/Hora.vue')
     }
   ]
 });

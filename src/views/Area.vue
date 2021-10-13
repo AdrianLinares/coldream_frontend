@@ -1,6 +1,7 @@
 <template>
-  <div class="container  row mx-auto  col-6  justify-content-center align-content-center ">
-    <h1 class="mb-3">Notas</h1>
+  <div class="container  row mx-auto  col-5  justify-content-center align-content-center ">
+    <h1 class="mb-3">Registro de Áreas Académicas y Docentes
+</h1>
 
     <b-alert
       :show="dismissCountDown"
@@ -12,19 +13,19 @@
       {{ mensaje.texto }}
     </b-alert>
 
-    <form @submit.prevent="agregarNota()" v-if="agregar">
-      <h3 class="text-center mb-3">Agregar nueva Nota</h3>
+    <form @submit.prevent="agregarArea()" v-if="agregar">
+      <h3 class="text-center mb-3">Agregar nueva Area y/o Docente</h3>
       <input
         type="text"
-        placeholder="Ingrese un Nombre"
+        placeholder="Ingrese una Área"
         class="form-control my-2"
         v-model="nota.nombre"
       />
       <input
         type="text"
-        placeholder="Ingrese una descripcion"
+        placeholder="Ingrese un Docente"
         class="form-control my-2"
-        v-model="nota.descripcion"
+        v-model="nota.docente"
       />
       <div class="d-grid my-4">
         
@@ -45,7 +46,7 @@
       
     </form>
 
-    <form @submit.prevent="editarNota(notaEditar)" v-else>
+    <form @submit.prevent="editarArea(areaEditar)" v-else>
       <h3 class="text-center">Editar Nota</h3>
       <input
         type="text"
@@ -70,7 +71,7 @@
     <table class="table">
       <thead>
         <tr>
-          
+          <th scope="col">#</th>
           <th scope="col">Nombre</th>
           <th scope="col">Descripción</th>
           <th scope="col">Fecha</th>
@@ -79,18 +80,18 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in notas" :key="index">
-          
+          <th scope="row">{{ item._id }}</th>
           <td>{{ item.nombre }}</td>
           <td>{{ item.descripcion }}</td>
           <td>{{ item.date }}</td>
           <td>
             <b-button
-              class="btn-warning btn-sm mx-2 my-1"
+              class="btn-warning btn-sm mx-2"
               @click="activarEdicion(item._id)"
               >Actualizar</b-button
             >
             <b-button
-              class="btn-danger btn-sm mx-2 my-1"
+              class="btn-danger btn-sm mx-2"
               @click="eliminarNota(item._id)"
               >Eliminar</b-button
             >
