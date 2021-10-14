@@ -19,13 +19,13 @@
         type="text"
         placeholder="Ingrese una Área"
         class="form-control my-2"
-        v-model="nota.nombre"
+        v-model="area.area"
       />
       <input
         type="text"
         placeholder="Ingrese un Docente"
         class="form-control my-2"
-        v-model="nota.docente"
+        v-model="area.docente"
       />
       <div class="d-grid my-4">
         
@@ -52,13 +52,13 @@
         type="text"
         placeholder="Ingrese un Nombre"
         class="form-control my-2"
-        v-model="notaEditar.nombre"
+        v-model="areaEditar.area"
       />
       <input
         type="text"
         placeholder="Ingrese una descripcion"
         class="form-control my-2"
-        v-model="notaEditar.descripcion"
+        v-model="areaEditar.docente"
       />
       <b-button class="btn-lg btn-block btn-info mx-2 my-2" type="submit"
         >Editar</b-button
@@ -71,19 +71,15 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Descripción</th>
-          <th scope="col">Fecha</th>
+          <th scope="col">Área Académica</th>
+          <th scope="col">Docente</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in notas" :key="index">
-          <th scope="row">{{ item._id }}</th>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.descripcion }}</td>
-          <td>{{ item.date }}</td>
+        <tr v-for="(item, index) in areas" :key="index">
+          <td>{{ item.area }}</td>
+          <td>{{ item.docente }}</td>
           <td>
             <b-button
               class="btn-info btn-sm mx-2"
@@ -92,7 +88,7 @@
             >
             <b-button
               class="btn-secondary btn-sm mx-2"
-              @click="eliminarNota(item._id)"
+              @click="eliminarArea(item._id)"
               >Eliminar</b-button
             >
           </td>
@@ -110,10 +106,10 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      notas: [],
-      nota: { nombre: "", descripcion: "" },
+      areas: [],
+      area: { area: "", docente: "" },
       agregar: true,
-      notaEditar: {},
+      areaEditar: {},
 
       mensaje: { color: "success", texto: "" },
       dismissSecs: 5,
@@ -124,7 +120,7 @@ export default {
     ...mapState(['token'])
   },
   created() {
-    this.listarNotas();
+    this.listarAreas();
   },
   methods: {
     alerta(){
@@ -132,7 +128,7 @@ export default {
       this.mensaje.texto = 'Probando alerta';
       this.showAlert();
     },
-    listarNotas() {
+    listarAreas() {
       const config = {
         headers: {
           token: this.token
@@ -140,17 +136,17 @@ export default {
       }
 
       this.axios
-        .get("/nota", config)
+        .get("/area", config)
         .then((response) => {
           // console.log(response.data)
-          this.notas = response.data;
+          this.areas = response.data;
         })
         .catch((e) => {
           console.log("error" + e);
         });
     },
 
-    agregarNota() {
+    agregarArea() {
       const config = {
         headers: {
           token: this.token
@@ -159,13 +155,13 @@ export default {
       
       //console.log(this.nota);
       this.axios
-        .post("/nueva-nota", this.nota, config)
+        .post("/nueva-area", this.area, config)
         .then((res) => {
-          this.notas.push(res.data);
-          this.nota.nombre = "";
-          this.nota.descripcion = "";
+          this.areas.push(res.data);
+          this.area.area = "";
+          this.area.docente = "";
           this.mensaje.color = "success";
-          this.mensaje.texto = "Nota Agregada!";
+          this.mensaje.texto = "Area Agregada!";
           this.showAlert();
         })
         .catch((e) => {
@@ -181,7 +177,7 @@ export default {
         });
     },
 
-    eliminarNota(id) {
+    eliminarArea(id) {
       const config = {
         headers: {
           token: this.token
@@ -189,10 +185,10 @@ export default {
       }
 
       this.axios
-        .delete(`nota/${id}`)
+        .delete(`area/${id}`)
         .then((res) => {
-          let index = this.notas.findIndex((item) => item._id === res.data._id);
-          this.notas.splice(index, 1);
+          let index = this.areas.findIndex((item) => item._id === res.data._id);
+          this.areas.splice(index, 1);
 
           this.showAlert();
           this.mensaje.texto = "Notas Eliminada!";
@@ -211,31 +207,31 @@ export default {
       }
 
     this.agregar = false;
-    this.axios.get(`nota/${id}`)
+    this.axios.get(`area/${id}`)
       .then(res => {
-        this.notaEditar = res.data;
+        this.areaEditar = res.data;
       })
       .catch(e => {
         console.log(e.response);
       })
   },
 
-  editarNota(item){
+  editarArea(item){
     const config = {
         headers: {
           token: this.token
         }
       }
       
-    this.axios.put(`nota/${item._id}`, item)
+    this.axios.put(`area/${item._id}`, item)
       .then(res => {
-        let index = this.notas.findIndex( itemNota => itemNota._id === this.notaEditar._id);
-        this.notas[index].nombre = this.notaEditar.nombre;
-        this.notas[index].descripcion = this.notaEditar.descripcion;
-        this.notaEditar = {}
+        let index = this.notas.findIndex( itemArea => itemArea._id === this.areaEditar._id);
+        this.areas[index].area = this.areaEditar.nombre;
+        this.areas[index].descripcion = this.areaEditar.descripcion;
+        this.areaEditar = {}
 
         this.showAlert();
-        this.mensaje.texto = 'Nota Actualizada'
+        this.mensaje.texto = 'Área Actualizada'
         this.mensaje.color = 'success'
       })
       .catch(e => {
