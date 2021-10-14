@@ -1,6 +1,6 @@
 <template>
-  <div class="container  row mx-auto  col-6  justify-content-center align-content-center ">
-    <h1 class="mb-3">Notas</h1>
+  <div class="container  row mx-auto  col-8  justify-content-center align-content-center ">
+    <h1 class="mb-3">Agenda Docente</h1>
 
     <b-alert
       :show="dismissCountDown"
@@ -12,25 +12,25 @@
       {{ mensaje.texto }}
     </b-alert>
 
-    <form @submit.prevent="agregarNota()" v-if="agregar">
-      <h3 class="text-center mb-3">Agregar nueva Nota</h3>
+    <form @submit.prevent="agregarAgenda()" v-if="agregar">
+      <h3 class="text-center mb-3">Agregar nueva entrada</h3>
       <input
         type="text"
         placeholder="Fundación"
         class="form-control my-2"
-        v-model="nota.nombre"
+        v-model="agenda.fundacion"
       />
       <input
         type="text"
-        placeholder="Ingrese Fecha (MM/DD/AAAA)"
+        placeholder="Ingrese Fecha (DD/MM/AAAA)"
         class="form-control my-2"
-        v-model="nota.descripcion"
+        v-model="agenda.fecha"
       />
       <input
         type="text"
-        placeholder="Ingrese Horario (12:00-14:00)"
+        placeholder="Ingrese Horario (07:00-17:00)"
         class="form-control my-2"
-        v-model="nota.descripcion"
+        v-model="agenda.hora"
       />
       <div class="d-grid my-4">
         
@@ -51,19 +51,25 @@
       
     </form>
 
-    <form @submit.prevent="editarNota(notaEditar)" v-else>
+    <form @submit.prevent="editarAgenda(agendaEditar)" v-else>
       <h3 class="text-center">Editar Nota</h3>
       <input
         type="text"
-        placeholder="Ingrese un Nombre"
+        placeholder="Fundación"
         class="form-control my-2"
-        v-model="notaEditar.nombre"
+        v-model="agenda.fundacion"
       />
       <input
         type="text"
-        placeholder="Ingrese una descripcion"
+        placeholder="Ingrese Fecha (DD/MM/AAAA)"
         class="form-control my-2"
-        v-model="notaEditar.descripcion"
+        v-model="agenda.fecha"
+      />
+      <input
+        type="text"
+        placeholder="Ingrese Horario (07:00-17:00)"
+        class="form-control my-2"
+        v-model="agenda.hora"
       />
       <b-button class="btn-lg btn-block btn-info mx-2 my-2" type="submit"
         >Editar</b-button
@@ -75,8 +81,7 @@
 
     <table class="table">
       <thead>
-        <tr>
-          
+        <tr>          
           <th scope="col">Fundación</th>
           <th scope="col">Fecha</th>
           <th scope="col">Horario</th>
@@ -84,8 +89,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in notas" :key="index">
-          
+        <tr v-for="(item, index) in agendas" :key="index">          
           <td>{{ item.fundación }}</td>
           <td>{{ item.fecha }}</td>
           <td>{{ item.hora }}</td>
@@ -97,7 +101,7 @@
             >
             <b-button
               class="btn-secondary btn-sm mx-2 my-1"
-              @click="eliminarNota(item._id)"
+              @click="eliminarAgenda(item._id)"
               >Eliminar</b-button
             >
           </td>
@@ -115,10 +119,10 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      notas: [],
-      nota: { nombre: "", descripcion: "" },
+      agendas: [],
+      agenda: { fundacion: "", fecha: "", hora: "" },
       agregar: true,
-      notaEditar: {},
+      agendaEditar: {},
 
       mensaje: { color: "success", texto: "" },
       dismissSecs: 5,
@@ -129,7 +133,7 @@ export default {
     ...mapState(['token'])
   },
   created() {
-    this.listarNotas();
+    this.listarAgendas();
   },
   methods: {
     alerta(){
@@ -137,7 +141,7 @@ export default {
       this.mensaje.texto = 'Probando alerta';
       this.showAlert();
     },
-    listarNotas() {
+    listarAgendas() {
       const config = {
         headers: {
           token: this.token
@@ -145,17 +149,17 @@ export default {
       }
 
       this.axios
-        .get("/nota", config)
+        .get("/agenda", config)
         .then((response) => {
           // console.log(response.data)
-          this.notas = response.data;
+          this.agendas = response.data;
         })
         .catch((e) => {
           console.log("error" + e);
         });
     },
 
-    agregarNota() {
+    agregarAgenda() {
       const config = {
         headers: {
           token: this.token
@@ -164,13 +168,14 @@ export default {
       
       //console.log(this.nota);
       this.axios
-        .post("/nueva-nota", this.nota, config)
+        .post("/nueva-agenda", this.agenda, config)
         .then((res) => {
-          this.notas.push(res.data);
-          this.nota.nombre = "";
-          this.nota.descripcion = "";
+          this.agendas.push(res.data);
+          this.agendas.fundacion = "";
+          this.agenda.fecha = "";
+          this.agenda.hora = "";
           this.mensaje.color = "success";
-          this.mensaje.texto = "Nota Agregada!";
+          this.mensaje.texto = "Agenda Agregada!";
           this.showAlert();
         })
         .catch((e) => {
@@ -186,7 +191,7 @@ export default {
         });
     },
 
-    eliminarNota(id) {
+    eliminarAgenda(id) {
       const config = {
         headers: {
           token: this.token
@@ -194,13 +199,13 @@ export default {
       }
 
       this.axios
-        .delete(`nota/${id}`)
+        .delete(`agenda/${id}`)
         .then((res) => {
-          let index = this.notas.findIndex((item) => item._id === res.data._id);
-          this.notas.splice(index, 1);
+          let index = this.agendas.findIndex((item) => item._id === res.data._id);
+          this.agendas.splice(index, 1);
 
           this.showAlert();
-          this.mensaje.texto = "Notas Eliminada!";
+          this.mensaje.texto = "Agenda Eliminada!";
           this.mensaje.color = "danger";
         })
         .catch((e) => {
@@ -216,9 +221,9 @@ export default {
       }
 
     this.agregar = false;
-    this.axios.get(`nota/${id}`)
+    this.axios.get(`agenda/${id}`)
       .then(res => {
-        this.notaEditar = res.data;
+        this.agendaEditar = res.data;
       })
       .catch(e => {
         console.log(e.response);
@@ -234,13 +239,14 @@ export default {
       
     this.axios.put(`nota/${item._id}`, item)
       .then(res => {
-        let index = this.notas.findIndex( itemNota => itemNota._id === this.notaEditar._id);
-        this.notas[index].nombre = this.notaEditar.nombre;
-        this.notas[index].descripcion = this.notaEditar.descripcion;
-        this.notaEditar = {}
+        let index = this.agendas.findIndex( itemAgenda => itemAgenda._id === this.agendaEditar._id);
+        this.agendas[index].fundacion = this.agendaEditar.fundacion;
+        this.agendas[index].fecha = this.agendaEditar.fecha;
+        this.agendas[index].hora = this.agendaEditar.hora;
+        this.agendasEditar = {}
 
         this.showAlert();
-        this.mensaje.texto = 'Nota Actualizada'
+        this.mensaje.texto = 'Agenda Actualizada'
         this.mensaje.color = 'success'
       })
       .catch(e => {
