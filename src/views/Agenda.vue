@@ -18,7 +18,7 @@
         type="text"
         placeholder="Fundación"
         class="form-control my-2"
-        v-model="agenda.fundacion"
+        v-model="agenda.nombre"
       />
       <input
         type="text"
@@ -57,7 +57,7 @@
         type="text"
         placeholder="Fundación"
         class="form-control my-2"
-        v-model="agenda.fundacion"
+        v-model="agenda.nombre"
       />
       <input
         type="text"
@@ -90,7 +90,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in agendas" :key="index">          
-          <td>{{ item.fundación }}</td>
+          <td>{{ item.nombre }}</td>
           <td>{{ item.fecha }}</td>
           <td>{{ item.hora }}</td>
           <td>
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       agendas: [],
-      agenda: { fundacion: "", fecha: "", hora: "" },
+      agenda: { nombre: "", fecha: "", hora: "" },
       agregar: true,
       agendaEditar: {},
 
@@ -171,7 +171,7 @@ export default {
         .post("/nueva-agenda", this.agenda, config)
         .then((res) => {
           this.agendas.push(res.data);
-          this.agendas.fundacion = "";
+          this.agendas.nombre = "";
           this.agenda.fecha = "";
           this.agenda.hora = "";
           this.mensaje.color = "success";
@@ -240,7 +240,7 @@ export default {
     this.axios.put(`nota/${item._id}`, item)
       .then(res => {
         let index = this.agendas.findIndex( itemAgenda => itemAgenda._id === this.agendaEditar._id);
-        this.agendas[index].fundacion = this.agendaEditar.fundacion;
+        this.agendas[index].nombre = this.agendaEditar.nombre;
         this.agendas[index].fecha = this.agendaEditar.fecha;
         this.agendas[index].hora = this.agendaEditar.hora;
         this.agendasEditar = {}
