@@ -1,5 +1,5 @@
 <template>
-  <div class="container  row mx-auto  col-5  justify-content-center align-content-center ">
+  <div class="container  row mx-auto  col-8  justify-content-center align-content-center ">
     <h1 class="mb-3">Registro de Áreas Académicas y Docentes
 </h1>
 
@@ -30,14 +30,14 @@
       <div class="d-grid my-4">
         
         <button
-          class="btn btn-success btn-md"
+          class="btn btn-primary btn-md"
           type="submit" 
           >
           Agregar
         </Button>
         <br>
         <button
-          class="btn btn-dark btn-md"
+          class="btn btn-secondary btn-md"
           type="submit" @click="$router.push('/Menu')" 
           >
           Volver
@@ -60,10 +60,10 @@
         class="form-control my-2"
         v-model="notaEditar.descripcion"
       />
-      <b-button class="btn-lg btn-block btn-warning mx-2 my-2" type="submit"
+      <b-button class="btn-lg btn-block btn-info mx-2 my-2" type="submit"
         >Editar</b-button
       >
-      <b-button class="btn-lg btn-block mx-2 my-2" @click="agregar = true"
+      <b-button class="btn-lg btn-block btn-secondary mx-2 my-2" @click="agregar = true"
         >Cancelar</b-button
       >
     </form>
@@ -86,12 +86,12 @@
           <td>{{ item.date }}</td>
           <td>
             <b-button
-              class="btn-warning btn-sm mx-2"
+              class="btn-info btn-sm mx-2"
               @click="activarEdicion(item._id)"
               >Actualizar</b-button
             >
             <b-button
-              class="btn-danger btn-sm mx-2"
+              class="btn-secondary btn-sm mx-2"
               @click="eliminarNota(item._id)"
               >Eliminar</b-button
             >

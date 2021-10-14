@@ -17,11 +17,6 @@ const router = new Router({
       component: () => import('../views/Home.vue')
     },
     {
-      path: '/about',
-      name: 'About',
-      component: () => import('../views/About.vue')
-    },
-    {
       path: '/notas',
       name: 'notas',
       component: () => import('../views/Notas.vue'),
@@ -51,6 +46,11 @@ const router = new Router({
       path: '/hora',
       name: 'hora',
       component: () => import('../views/Hora.vue')
+    },
+    {
+      path: '/agenda',
+      name: 'agenda',
+      component: () => import('../views/Agenda.vue')
     }
   ]
 });

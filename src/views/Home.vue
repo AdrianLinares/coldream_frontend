@@ -6,7 +6,7 @@
       <h2 class="text-center ">Gestor Administrativo Para Plataformas Web "ColDream"</h2>
       <br>
       <button 
-        class="btn btn-lg btn-md btn-dark  mb-5 " 
+        class="btn btn-lg btn-md btn-primary  mb-5 " 
         type="button"
          
         @click="$router.push('/login')"

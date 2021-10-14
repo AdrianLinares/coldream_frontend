@@ -21,21 +21,21 @@
 
         <div class="d-grid my-2 ">
           <button
-            class="btn btn-dark btn-md"
+            class="btn btn-primary btn-md"
             type="submit" 
             >
             Acceder
           </button>
           <br>
           <button
-            class="btn btn-warning btn-md"
+            class="btn btn-primary btn-md"
             type="submit" 
             >
             Registrarse
           </button>
           <br>
           <button
-            class="btn btn-danger btn-md"
+            class="btn btn-secondary btn-md"
             type="submit" @click="$router.push('/')"
             >
             Volver

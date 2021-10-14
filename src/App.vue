@@ -27,18 +27,18 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
 #app {
   box-sizing: border-box;
   -webkit-box-flex: initial;
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'Sarabun', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #9ce44f;
+  color: #030303;
   display: -webkit-box ;
-  background-color:aliceblue ;
+  background-color:rgb(249, 249, 250) ;
   /* width: 100%;
   max-width: 100%;
   height: 100%;

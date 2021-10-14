@@ -1,51 +1,44 @@
 <template>
-  <div class="container  row mx-auto  col-5  justify-content-center align-content-center ">
+  <div class="container  row mx-auto  col-6  justify-content-center align-content-center ">
+    <h1 class="mb-3">Notas</h1>
 
-      <div class="d-grid gap-1 m-4 col-5 mx-auto justify-content-center align-content-center ">
-          <img alt="logoat" src="../assets/logoat.png">
+    <b-alert
+      :show="dismissCountDown"
+      dismissible
+      :variant="mensaje.color"
+      @dismissed="dismissCountDown = 0"
+      @dismiss-count-down="countDownChanged"
+    >
+      {{ mensaje.texto }}
+    </b-alert>
 
-      </div>
-    <h1 class="mb-3">Solicitud de Horas Cátedra</h1>
-   
     <form @submit.prevent="agregarNota()" v-if="agregar">
-      <h3 class="text-center mb-3">Seleccionar Átea y Docente</h3>
-      <!-- <input
+      <h3 class="text-center mb-3">Agregar nueva Nota</h3>
+      <input
         type="text"
-        placeholder="Ingrese un Nombre"
+        placeholder="Fundación"
         class="form-control my-2"
         v-model="nota.nombre"
-      /> -->
-      <select class="form-select my-2" aria-label="Default select example">
-  <option selected>Área Académica</option>
-  <option value="1">Ciencias naturales y educación ambiental</option>
-  <option value="2">Ciencias sociales, historia, geografía, constitución política y democracia</option>
-  <option value="3">Educación artística y cultural</option>
-  <option value="4">Educación ética y en valores humanos</option>
-  <option value="5">Educación física, recreación y deportes</option>
-  <option value="6">Humanidades, lengua castellana e idiomas extranjeros</option>
-  <option value="7">Matemáticas</option>
-  <option value="8">Tecnología e informática</option>
-</select>
-      <!-- <input
+      />
+      <input
         type="text"
-        placeholder="Ingrese una descripcion"
+        placeholder="Ingrese Fecha (MM/DD/AAAA)"
         class="form-control my-2"
         v-model="nota.descripcion"
-      /> -->
-      <select class="form-select my-2" aria-label="Default select example">
-  <option selected>Docente</option>
-  <option value="1">Ximena</option>
-  <option value="2">Carlos</option>
-  <option value="3">Marcela</option>
-  <option value="4">Sergio</option>
-</select>
+      />
+      <input
+        type="text"
+        placeholder="Ingrese Horario (12:00-14:00)"
+        class="form-control my-2"
+        v-model="nota.descripcion"
+      />
       <div class="d-grid my-4">
         
         <button
           class="btn btn-primary btn-md"
-          type="submit" @click="$router.push('/Agenda')"
+          type="submit" 
           >
-          Consultar Agenda
+          Agregar
         </Button>
         <br>
         <button
@@ -60,37 +53,57 @@
 
     <form @submit.prevent="editarNota(notaEditar)" v-else>
       <h3 class="text-center">Editar Nota</h3>
-      <!-- <input
+      <input
         type="text"
         placeholder="Ingrese un Nombre"
         class="form-control my-2"
-        v-model="nota.nombre"
-      /> -->
-      <select class="form-select my-2" aria-label="Default select example">
-  <option selected>Área Académica</option>
-  <option value="1">Ciencias naturales y educación ambiental</option>
-  <option value="2">Ciencias sociales, historia, geografía, constitución política y democracia</option>
-  <option value="3">Educación artística y cultural</option>
-  <option value="4">Educación ética y en valores humanos</option>
-  <option value="5">Educación física, recreación y deportes</option>
-  <option value="6">Humanidades, lengua castellana e idiomas extranjeros</option>
-  <option value="7">Matemáticas</option>
-  <option value="8">Tecnología e informática</option>
-</select>
-      <!-- <input
+        v-model="notaEditar.nombre"
+      />
+      <input
         type="text"
         placeholder="Ingrese una descripcion"
         class="form-control my-2"
-        v-model="nota.descripcion"
-      /> -->
-      <select class="form-select my-2" aria-label="Default select example">
-  <option selected>Docente</option>
-  <option value="1">Ximena</option>
-  <option value="2">Carlos</option>
-  <option value="3">Marcela</option>
-  <option value="4">Sergio</option>
-</select>
+        v-model="notaEditar.descripcion"
+      />
+      <b-button class="btn-lg btn-block btn-info mx-2 my-2" type="submit"
+        >Editar</b-button
+      >
+      <b-button class="btn-lg btn-block mx-2 my-2" @click="agregar = true"
+        >Cancelar</b-button
+      >
     </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          
+          <th scope="col">Fundación</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in notas" :key="index">
+          
+          <td>{{ item.fundación }}</td>
+          <td>{{ item.fecha }}</td>
+          <td>{{ item.hora }}</td>
+          <td>
+            <b-button
+              class="btn-info btn-sm mx-2 my-1"
+              @click="activarEdicion(item._id)"
+              >Actualizar</b-button
+            >
+            <b-button
+              class="btn-secondary btn-sm mx-2 my-1"
+              @click="eliminarNota(item._id)"
+              >Eliminar</b-button
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
