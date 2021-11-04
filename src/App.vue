@@ -27,24 +27,13 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
 #app {
-  box-sizing: border-box;
-  -webkit-box-flex: initial;
-  font-family: 'Sarabun', cursive;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #030303;
-  display: -webkit-box ;
-  background-color:rgb(249, 249, 250) ;
-  /* width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 100%; */
-  
-  
+  color: #2c3e50;  
   
 }
 
@@ -60,5 +49,4 @@ export default {
 #nav a.router-link-exact-active {
   color: #6e93d8;
 }
-
 </style>

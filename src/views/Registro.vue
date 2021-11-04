@@ -158,7 +158,7 @@ export default {
   data() {
     return {
       
-      registro: [],
+      registros: [],
       registro: {
         nombres: "",
         apellidos: "",
@@ -214,7 +214,7 @@ export default {
 
       //console.log(this.nota);
       this.axios
-        .post("/nuevo-registro", this.registro, config)
+        .post("/nuevo-registro", this.registros, config)
         .then((res) => {
           this.registros.push(res.data);
           this.registro.nombres = "";
@@ -224,7 +224,7 @@ export default {
           this.registro.ciudad = "";
           this.registro.pais = "";
           this.mensaje.color = "success";
-          this.mensaje.texto = "Nota Agregada!";
+          this.mensaje.texto = "Registro Agregada!";
           this.showAlert();
         })
         .catch((e) => {
@@ -248,7 +248,7 @@ export default {
       };
 
       this.axios
-        .delete(`/registro/${id}`)
+        .delete(`registro/${id}`)
         .then((res) => {
           let index = this.registros.findIndex((reg) => reg._id === res.data._id);
           this.registros.splice(index, 1);
@@ -271,7 +271,7 @@ export default {
 
       this.agregar = false;
       this.axios
-        .get(`/registro/${id}`)
+        .get(`registro/${id}`)
         .then((res) => {
           this.registroEditar = res.data;
         })
@@ -288,12 +288,12 @@ export default {
       };
 
       this.axios
-        .put(`/registro/${reg._id}`, reg)
+        .put(`registro/${reg._id}`, reg)
         .then((res) => {
           let index = this.registros.findIndex(
             (itemRegistro) => itemRegistro._id === this.registroEditar._id
           );
-          this.registro[index].nombres = this.registroEditar.nombres;
+          this.registros[index].nombres = this.registroEditar.nombres;
           this.registros[index].apellidos = this.registroEditar.apellidos;
           this.registros[index].telefono = this.registroEditar.telefono;
           this.registros[index].correo = this.registroEditar.correo;
